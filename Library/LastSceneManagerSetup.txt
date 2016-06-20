@@ -1,0 +1,4 @@
+sceneSetups:
+- path: Assets/Prefabs/Cards/scene/demoScene.unity
+  isLoaded: 1
+  isActive: 1
