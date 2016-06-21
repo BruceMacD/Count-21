@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Dealer.cs" />
+    <Compile Include="Assets\Scripts\DebugChangeCard.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Buttons\ColorfulButtons\Credits.txt" />
