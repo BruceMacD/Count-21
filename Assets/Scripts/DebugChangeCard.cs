@@ -29,4 +29,17 @@ public class DebugChangeCard : MonoBehaviour
             cardIndex++;
         }
     }
+
+    public void OnClick()
+    {
+        deal.cardIndex = cardIndex;
+        deal.DealCard();
+
+        if (cardIndex == 52)
+        {
+            cardIndex = 0;
+        }
+
+        cardIndex++;
+    }
 }
