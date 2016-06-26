@@ -4,7 +4,6 @@ using System.Collections.Generic;
 public class Dealer : MonoBehaviour
 {
     SpriteRenderer spriteRenderer;
-    bool toggleFace = true;
     //contatiner for cards still in deck
     public List<Sprite> deck = new List<Sprite>();
     //list of cards in play
@@ -14,15 +13,12 @@ public class Dealer : MonoBehaviour
     //cardIndex 0 = back
     public int cardIndex = 1;
 
-    public void DealCard()
+    public void ShowCard(bool flip)
     {
-        Debug.Log("hit");
-        if (toggleFace)
+        if (flip)
         {
-            //show card value
+            //set card value
             spriteRenderer.sprite = deck[cardIndex];
-            //this will go out of range
-            cardIndex++;
         }
         else
         {

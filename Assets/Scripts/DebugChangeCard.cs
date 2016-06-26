@@ -3,7 +3,9 @@ using System.Collections;
 
 public class DebugChangeCard : MonoBehaviour
 {
+    CardFlip flip;
     Dealer deal;
+    //starts showing back, so start at count 1
     int cardIndex = 1;
 
     public GameObject card;
@@ -11,6 +13,7 @@ public class DebugChangeCard : MonoBehaviour
 	// Use this for initialization
 	void Awake()
     {
+        flip = card.GetComponent<CardFlip>();
         deal = card.GetComponent<Dealer>();
 	}
 
@@ -18,28 +21,17 @@ public class DebugChangeCard : MonoBehaviour
     {
         if (GUI.Button(new Rect(10, 10, 100, 28), "Hit me!"))
         {
-            deal.cardIndex = cardIndex;
-            deal.DealCard();
-
-            if (cardIndex == 52)
+            if (cardIndex >= deal.deck.Count)
             {
-                cardIndex = 0;
+                cardIndex = 1;
+                //flip.FlipCard(lastCard, firstCard, 0 index)
+                flip.FlipCard(deal.deck[deal.deck.Count - 1], deal.deck[0], 0); //return to back of card
             }
-
-            cardIndex++;
+            else
+            {
+                flip.FlipCard(deal.deck[cardIndex - 1], deal.deck[cardIndex], cardIndex);
+                cardIndex++;
+            }
         }
-    }
-
-    public void OnClick()
-    {
-        deal.cardIndex = cardIndex;
-        deal.DealCard();
-
-        if (cardIndex == 52)
-        {
-            cardIndex = 0;
-        }
-
-        cardIndex++;
     }
 }

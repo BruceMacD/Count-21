@@ -6,8 +6,8 @@ public class ButtonController : MonoBehaviour
     Button hitButton;
     Dealer deal;
     int cardIndex = 1;
-
-    void Awake()
+    //not implemented
+    public void Awake()
     {
         hitButton = GetComponent<Button>();
 
