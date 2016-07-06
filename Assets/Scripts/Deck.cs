@@ -7,7 +7,11 @@ public class Deck : MonoBehaviour
 
     public IEnumerable<int> GetCards()
     {
-        foreach (int i in cards)
+        //foreach (int i in cards)
+        //{
+         //   yield return i;
+        //}
+        for (int i = 0; i<22; i++)
         {
             yield return i;
         }

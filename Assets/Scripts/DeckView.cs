@@ -7,6 +7,7 @@ public class DeckView : MonoBehaviour
     Deck deck;
     public Vector3 start;
     public GameObject cardPrefab;
+    public GameObject canvas;
     public float cardOffset;
 
     void Start()
@@ -24,7 +25,9 @@ public class DeckView : MonoBehaviour
             float offset = cardOffset * cardCount; 
 
             GameObject cardCopy = (GameObject)Instantiate(cardPrefab);
-            Vector3 temp = start + new Vector3(offset, 0f);
+            cardCopy.transform.SetParent(canvas.transform, false);
+            //offset for viewing purposes
+            Vector3 temp = start + new Vector3(offset, 88f);
             cardCopy.transform.position = temp;
 
             Dealer deal = cardCopy.GetComponent<Dealer>();
