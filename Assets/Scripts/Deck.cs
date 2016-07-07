@@ -3,15 +3,11 @@ using System.Collections.Generic;
 
 public class Deck : MonoBehaviour
 {
-    List<int> cards;
+    static List<int> cards;
 
     public IEnumerable<int> GetCards()
     {
-        //foreach (int i in cards)
-        //{
-         //   yield return i;
-        //}
-        for (int i = 0; i<22; i++)
+        foreach (int i in cards)
         {
             yield return i;
         }
@@ -47,7 +43,7 @@ public class Deck : MonoBehaviour
         }
     }
 
-	void Start ()
+	void Awake()
     {
         Shuffle();
 	}

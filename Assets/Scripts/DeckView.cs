@@ -27,6 +27,7 @@ public class DeckView : MonoBehaviour
             GameObject cardCopy = (GameObject)Instantiate(cardPrefab);
             cardCopy.transform.SetParent(canvas.transform, false);
             //offset for viewing purposes
+            //TD DO: fix 88f offset
             Vector3 temp = start + new Vector3(offset, 88f);
             cardCopy.transform.position = temp;
 
