@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class Deck : MonoBehaviour
+public class CardStack : MonoBehaviour
 {
-    static List<int> cards;
+    List<int> cards;
+
+    //only create if deck
+    public bool deckCheck;
 
     public IEnumerable<int> GetCards()
     {
@@ -13,17 +16,23 @@ public class Deck : MonoBehaviour
         }
     }
 
-    public void Shuffle()
+    //card decks are a 'stack'
+    //Pop/Push to Get/Set
+    public int Pop()
     {
-        if (cards == null)
-        {
-            cards = new List<int>();
-        }
-        else
-        {
-            cards.Clear();
-        }
+        //first random number
+        int ret = cards[0];
+        cards.RemoveAt(0);
+        return ret;
+    }
 
+    public void Push(int card)
+    {
+        cards.Add(card);
+    }
+
+    public void MakeDeck()
+    {
         //fill with cards
         for (int i = 0; i < 52; i++)
         {
@@ -45,6 +54,10 @@ public class Deck : MonoBehaviour
 
 	void Awake()
     {
-        Shuffle();
-	}
+        cards = new List<int>();
+        if (deckCheck)
+        {
+            MakeDeck();
+        }
+    }
 }

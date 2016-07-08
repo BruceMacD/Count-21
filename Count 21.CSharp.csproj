@@ -64,11 +64,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\ButtonController.cs" />
+    <Compile Include="Assets\Scripts\CardActor.cs" />
     <Compile Include="Assets\Scripts\CardFlip.cs" />
-    <Compile Include="Assets\Scripts\Dealer.cs" />
+    <Compile Include="Assets\Scripts\CardStack.cs" />
+    <Compile Include="Assets\Scripts\CardStackView.cs" />
     <Compile Include="Assets\Scripts\DebugChangeCard.cs" />
-    <Compile Include="Assets\Scripts\Deck.cs" />
-    <Compile Include="Assets\Scripts\DeckView.cs" />
+    <Compile Include="Assets\Scripts\DebugDealer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Buttons\ColorfulButtons\Credits.txt" />

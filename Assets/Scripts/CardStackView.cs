@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(Deck))]
-public class DeckView : MonoBehaviour
+[RequireComponent(typeof(CardStack))]
+public class CardStackView : MonoBehaviour
 {
-    Deck deck;
+    CardStack deck;
     public Vector3 start;
     public GameObject cardPrefab;
     public GameObject canvas;
@@ -12,7 +12,7 @@ public class DeckView : MonoBehaviour
 
     void Start()
     {
-        deck = GetComponent<Deck>();
+        deck = GetComponent<CardStack>();
         ShowCards();
     }
 
@@ -31,9 +31,13 @@ public class DeckView : MonoBehaviour
             Vector3 temp = start + new Vector3(offset, 88f);
             cardCopy.transform.position = temp;
 
-            Dealer deal = cardCopy.GetComponent<Dealer>();
-            deal.cardIndex = i;
-            deal.ShowCard(true); 
+            CardActor card = cardCopy.GetComponent<CardActor>();
+            card.cardIndex = i;
+            card.ShowCard(true);
+
+            //keep the order consistant
+            SpriteRenderer spriteRenderer = cardCopy.GetComponent<SpriteRenderer>();
+            spriteRenderer.sortingOrder = cardCount;
 
             cardCount++;
         }

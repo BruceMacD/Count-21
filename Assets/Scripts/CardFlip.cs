@@ -6,7 +6,7 @@ public class CardFlip : MonoBehaviour
     //card flipping animation script
     float defaultCardScale;
     SpriteRenderer cardRender; //reference to attatched card sprite render
-    Dealer deal;
+    CardActor card;
 
     public AnimationCurve curveScale;
     public float animationTime = 0.5f;
@@ -15,7 +15,7 @@ public class CardFlip : MonoBehaviour
     {
         //get the current components
         cardRender = GetComponent<SpriteRenderer>();
-        deal = GetComponent<Dealer>();
+        card = GetComponent<CardActor>();
 
         defaultCardScale = transform.localScale.x;
     }
@@ -50,12 +50,12 @@ public class CardFlip : MonoBehaviour
 
         if (cardIndex == 0)
         {
-            deal.ShowCard(false); //show back
+            card.ShowCard(false); //show back
         }
         else
         {
-            deal.cardIndex = cardIndex; //show the card value
-            deal.ShowCard(true);
+            card.cardIndex = cardIndex; //show the card value
+            card.ShowCard(true);
         }
     }
 }
