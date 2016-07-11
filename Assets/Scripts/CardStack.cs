@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
+//Creates a list of numbers in a pseudorandom order to simulate shuffle
+
 public class CardStack : MonoBehaviour
 {
     List<int> cards;
@@ -13,6 +15,26 @@ public class CardStack : MonoBehaviour
         foreach (int i in cards)
         {
             yield return i;
+        }
+    }
+
+    public bool HasCards
+    {
+        get { return cards != null && cards.Count > 0; }
+    }
+
+    public int CardCount
+    {
+        get
+        {
+            if (cards == null)
+            {
+                return 0;
+            }
+            else
+            {
+                return cards.Count;
+            }
         }
     }
 
