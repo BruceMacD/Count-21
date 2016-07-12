@@ -7,20 +7,34 @@ using System;
 public class CardStackView : MonoBehaviour
 {
     CardStack deck;
-    List<int> fetchedCards;
+    Dictionary<int, GameObject> fetchedCards;
     int lastCount;
 
     public Vector3 start;
     public GameObject cardPrefab;
     public GameObject canvas;
+    public bool showFace = false;
     public float cardOffset;
 
     void Start()
     {
-        fetchedCards = new List<int>();
+        fetchedCards = new Dictionary<int, GameObject>();
         deck = GetComponent<CardStack>();
         ShowCards();
         lastCount = deck.CardCount;
+
+        deck.CardRemoved += Deck_CardRemoved;
+
+    }
+
+    private void Deck_CardRemoved(object sender, CardEventRemovedArgs e)
+    {
+        //check contains card to be removed
+        if (fetchedCards.ContainsKey(e.CardIndex))
+        {
+            Destroy(fetchedCards[e.CardIndex]);
+            fetchedCards.Remove(e.CardIndex);
+        }
     }
 
     void Update()
@@ -51,7 +65,7 @@ public class CardStackView : MonoBehaviour
 
     void AddCard(Vector3 location, int cardIndex, int orderIndex)
     {
-        if (fetchedCards.Contains(cardIndex))
+        if (fetchedCards.ContainsKey(cardIndex))
         {
             //error check, already added
             return;
@@ -63,12 +77,12 @@ public class CardStackView : MonoBehaviour
 
         CardActor card = cardCopy.GetComponent<CardActor>();
         card.cardIndex = cardIndex;
-        card.ShowCard(true);
+        card.ShowCard(showFace);
 
         //keep the order consistant
         SpriteRenderer spriteRenderer = cardCopy.GetComponent<SpriteRenderer>();
         spriteRenderer.sortingOrder = orderIndex;
 
-        fetchedCards.Add(cardIndex);
+        fetchedCards.Add(cardIndex, cardCopy);
     }
 }

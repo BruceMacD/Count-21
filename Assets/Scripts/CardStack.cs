@@ -23,6 +23,8 @@ public class CardStack : MonoBehaviour
         get { return cards != null && cards.Count > 0; }
     }
 
+    public event CardRemovedEventHandler CardRemoved;
+
     public int CardCount
     {
         get
@@ -45,6 +47,12 @@ public class CardStack : MonoBehaviour
         //first random number
         int ret = cards[0];
         cards.RemoveAt(0);
+
+        if (CardRemoved != null)
+        {
+            CardRemoved(this, new CardEventRemovedArgs(ret));
+        }
+
         return ret;
     }
 
@@ -56,7 +64,7 @@ public class CardStack : MonoBehaviour
     public void MakeDeck()
     {
         //fill with cards
-        for (int i = 0; i < 52; i++)
+        for (int i = 0; i < 51; i++)
         {
             cards.Add(i);
         }
@@ -72,6 +80,7 @@ public class CardStack : MonoBehaviour
             cards[changeIndex] = cards[n];
             cards[n] = swap;
         }
+
     }
 
 	void Awake()

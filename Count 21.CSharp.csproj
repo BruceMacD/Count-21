@@ -66,10 +66,12 @@
     <Compile Include="Assets\Scripts\ButtonController.cs" />
     <Compile Include="Assets\Scripts\CardActor.cs" />
     <Compile Include="Assets\Scripts\CardFlip.cs" />
+    <Compile Include="Assets\Scripts\CardRemovedEventArgs.cs" />
     <Compile Include="Assets\Scripts\CardStack.cs" />
     <Compile Include="Assets\Scripts\CardStackView.cs" />
     <Compile Include="Assets\Scripts\DebugChangeCard.cs" />
     <Compile Include="Assets\Scripts\DebugDealer.cs" />
+    <Compile Include="Assets\Scripts\RemoveEventDelegate.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Buttons\ColorfulButtons\Credits.txt" />
