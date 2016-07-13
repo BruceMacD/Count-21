@@ -14,6 +14,8 @@ public class CardStackView : MonoBehaviour
     public GameObject cardPrefab;
     public GameObject canvas;
     public bool showFace = false;
+    //selector to draw from top or bottom
+    public bool drawBottom;
     public float cardOffset;
 
     void Start()
@@ -81,7 +83,14 @@ public class CardStackView : MonoBehaviour
 
         //keep the order consistant
         SpriteRenderer spriteRenderer = cardCopy.GetComponent<SpriteRenderer>();
-        spriteRenderer.sortingOrder = orderIndex;
+        if (drawBottom)
+        {
+            spriteRenderer.sortingOrder = orderIndex;
+        }
+        else
+        {
+            spriteRenderer.sortingOrder = 52 - orderIndex;
+        }
 
         fetchedCards.Add(cardIndex, cardCopy);
     }
