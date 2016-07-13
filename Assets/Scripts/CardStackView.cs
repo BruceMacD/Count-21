@@ -89,7 +89,7 @@ public class CardStackView : MonoBehaviour
         }
         else
         {
-            spriteRenderer.sortingOrder = 52 - orderIndex;
+            spriteRenderer.sortingOrder = 51 - orderIndex;
         }
 
         fetchedCards.Add(cardIndex, cardCopy);

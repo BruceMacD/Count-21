@@ -6,7 +6,7 @@ public class CardActor : MonoBehaviour
     SpriteRenderer spriteRenderer;
     //contatiner for cards still in deck
     public List<Sprite> deck = new List<Sprite>();
-    //cardIndex 0 = back
+    public Sprite cardBack = new Sprite();
     public int cardIndex = 1;
 
     public void ShowCard(bool flip)
@@ -19,7 +19,7 @@ public class CardActor : MonoBehaviour
         else
         {
             //show back
-            spriteRenderer.sprite = deck[0];
+            spriteRenderer.sprite = cardBack;
         }
     }
 

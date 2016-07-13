@@ -75,7 +75,7 @@ public class CardStack : MonoBehaviour
         {
             n--;
             //dont shuffle card back stored at index 0
-            int changeIndex = Random.Range(1, n + 1);
+            int changeIndex = Random.Range(0, n + 1);
             int swap = cards[changeIndex];
             cards[changeIndex] = cards[n];
             cards[n] = swap;
