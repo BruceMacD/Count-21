@@ -75,7 +75,7 @@ public class CardStackView : MonoBehaviour
         GameObject cardCopy = (GameObject)Instantiate(cardPrefab);
         cardCopy.transform.SetParent(canvas.transform, false);
 
-        cardCopy.transform.position = location;
+        cardCopy.transform.localPosition = location;
 
         CardActor card = cardCopy.GetComponent<CardActor>();
         card.cardIndex = cardIndex;
