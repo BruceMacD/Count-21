@@ -61,6 +61,52 @@ public class CardStack : MonoBehaviour
         cards.Add(card);
     }
 
+    public int HandValue()
+    {
+        //gets card values
+        int total = 0;
+        int aces = 0;
+
+        foreach (int card in GetCards())
+        {
+            //cards are 13 decks per suit in order
+            //order -> A, 2, 3, ..., K, Q
+            int cardVal = card % 13;
+
+            if (cardVal == 0)
+            {
+                aces++;
+            }
+            else if (cardVal < 9)
+            {
+                //numbered cards, add one offset to index
+                cardVal += 1;
+            }
+            else
+            {
+                //face cards or 10;
+                cardVal = 10;
+            }
+
+            total += cardVal;
+        }
+        //TO DO: 10 + A + A = 22, should be 12
+        for (int i = 0; i < aces; i++)
+        {
+            //check for bust with ace
+            if (total + 11 <= 21)
+            {
+                total += 11;
+            }
+            else
+            {
+                total += 1;
+            }
+        }
+        
+        return total;
+    }
+
     public void MakeDeck()
     {
         //fill with cards
@@ -74,7 +120,6 @@ public class CardStack : MonoBehaviour
         while (n > 2)
         {
             n--;
-            //dont shuffle card back stored at index 0
             int changeIndex = Random.Range(0, n + 1);
             int swap = cards[changeIndex];
             cards[changeIndex] = cards[n];

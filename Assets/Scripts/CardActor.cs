@@ -7,7 +7,7 @@ public class CardActor : MonoBehaviour
     //contatiner for cards still in deck
     public List<Sprite> deck = new List<Sprite>();
     public Sprite cardBack = new Sprite();
-    public int cardIndex = 1;
+    public int cardIndex = 0;
 
     public void ShowCard(bool flip)
     {

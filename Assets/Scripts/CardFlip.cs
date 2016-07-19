@@ -47,7 +47,7 @@ public class CardFlip : MonoBehaviour
 
             yield return new WaitForFixedUpdate();
         } 
-
+        //TO DO: change to match new design
         if (cardIndex == 0)
         {
             card.ShowCard(false); //show back

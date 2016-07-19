@@ -15,7 +15,7 @@ public class CardStackView : MonoBehaviour
     public GameObject canvas;
     public bool showFace = false;
     //selector to draw from top or bottom
-    public bool drawBottom;
+    public bool drawBottom = false;
     public float cardOffset;
 
     void Start()
@@ -89,9 +89,11 @@ public class CardStackView : MonoBehaviour
         }
         else
         {
-            spriteRenderer.sortingOrder = 51 - orderIndex;
+            spriteRenderer.sortingOrder = 52 - orderIndex;
         }
 
         fetchedCards.Add(cardIndex, cardCopy);
+
+        Debug.Log("Hand value = " + deck.HandValue());
     }
 }

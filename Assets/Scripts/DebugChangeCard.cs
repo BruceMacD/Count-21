@@ -5,8 +5,7 @@ public class DebugChangeCard : MonoBehaviour
 {
     CardFlip flip;
     CardActor actor;
-    //starts showing back, so start at count 1
-    int cardIndex = 1;
+    int cardIndex = 0;
 
     public GameObject card;
 
@@ -23,7 +22,7 @@ public class DebugChangeCard : MonoBehaviour
         {
             if (cardIndex >= actor.deck.Count)
             {
-                cardIndex = 1;
+                cardIndex = 0;
                 //flip.FlipCard(lastCard, firstCard, 0 index)
                 flip.FlipCard(actor.deck[actor.deck.Count - 1], actor.deck[0], 0); //return to back of card
             }
