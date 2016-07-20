@@ -7,6 +7,21 @@ public class GameController : MonoBehaviour
     public CardStack deck;
     public CardStack dealer;
 
+    #region Controls
+
+    public void Hit()
+    {
+        player.Push(deck.Pop());
+        Debug.Log("Hit");
+    }
+
+    public void Stick()
+    {
+
+    }
+
+    #endregion
+
     void Start()
     {
         StartGame();
