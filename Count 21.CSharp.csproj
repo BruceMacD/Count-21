@@ -71,6 +71,7 @@
     <Compile Include="Assets\Scripts\CardStackView.cs" />
     <Compile Include="Assets\Scripts\DebugChangeCard.cs" />
     <Compile Include="Assets\Scripts\DebugDealer.cs" />
+    <Compile Include="Assets\Scripts\GameController.cs" />
     <Compile Include="Assets\Scripts\RemoveEventDelegate.cs" />
   </ItemGroup>
   <ItemGroup>

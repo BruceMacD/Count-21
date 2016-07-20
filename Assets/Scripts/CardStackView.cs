@@ -13,6 +13,8 @@ public class CardStackView : MonoBehaviour
     public Vector3 start;
     public GameObject cardPrefab;
     public GameObject canvas;
+    //dealers first card must be drawn face down
+    public bool dealerFirstCard = false;
     public bool showFace = false;
     //selector to draw from top or bottom
     public bool drawBottom = false;
@@ -57,7 +59,6 @@ public class CardStackView : MonoBehaviour
             float offset = cardOffset * cardCount;
             
             //offset for viewing purposes
-            //TD DO: fix 88f offset
             Vector3 temp = start + new Vector3(offset, 0f);
             AddCard(temp, i, cardCount);
 
@@ -79,7 +80,15 @@ public class CardStackView : MonoBehaviour
 
         CardActor card = cardCopy.GetComponent<CardActor>();
         card.cardIndex = cardIndex;
-        card.ShowCard(showFace);
+        if (dealerFirstCard)
+        {
+            dealerFirstCard = false;
+            card.ShowCard(false);
+        }
+        else
+        {
+            card.ShowCard(showFace);
+        }
 
         //keep the order consistant
         SpriteRenderer spriteRenderer = cardCopy.GetComponent<SpriteRenderer>();
