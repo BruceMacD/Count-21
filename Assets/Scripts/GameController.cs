@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour
     public CardStack player;
     public CardStack deck;
     public CardStack dealer;
+    public GameObject cardBack;
 
     public Button hitButton;
     public Button stickButton;
@@ -30,6 +31,11 @@ public class GameController : MonoBehaviour
     {
         hitButton.interactable = false;
         stickButton.interactable = false;
+
+        //flip dealer card by hiding cardBack
+        Vector3 localScale = transform.localScale;
+        localScale.x = 0; //hide card
+        cardBack.transform.localScale = localScale;
 
         StartCoroutine(DealerHit());
     }
@@ -53,7 +59,7 @@ public class GameController : MonoBehaviour
     IEnumerator DealerHit()
     {
         
-        while (dealer.HandValue() < 17 && (dealer.HandValue() < player.HandValue()))
+        while (dealer.HandValue() < 17 || (dealer.HandValue() < player.HandValue()))
         {
             //dealer.FlipFirstCard();
             dealer.Push(deck.Pop());
