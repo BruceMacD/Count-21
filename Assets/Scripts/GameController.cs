@@ -1,23 +1,37 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
+    int dealerFirstCard = -1;
+
     public CardStack player;
     public CardStack deck;
     public CardStack dealer;
+
+    public Button hitButton;
+    public Button stickButton;
 
     #region Controls
 
     public void Hit()
     {
         player.Push(deck.Pop());
-        Debug.Log("Hit");
+        if (player.HandValue() > 21)
+        {
+            //TO DO: Player is bust
+            hitButton.interactable = false;
+            stickButton.interactable = false;
+        }
     }
 
     public void Stick()
     {
+        hitButton.interactable = false;
+        stickButton.interactable = false;
 
+        StartCoroutine(DealerHit());
     }
 
     #endregion
@@ -35,4 +49,16 @@ public class GameController : MonoBehaviour
             dealer.Push(deck.Pop());
         }
     }
+
+    IEnumerator DealerHit()
+    {
+        
+        while (dealer.HandValue() < 17 && (dealer.HandValue() < player.HandValue()))
+        {
+            //dealer.FlipFirstCard();
+            dealer.Push(deck.Pop());
+            yield return new WaitForSeconds(1f);
+        }
+    }
+    
 }

@@ -28,7 +28,6 @@ public class CardStackView : MonoBehaviour
         lastCount = deck.CardCount;
 
         deck.CardRemoved += Deck_CardRemoved;
-
     }
 
     private void Deck_CardRemoved(object sender, CardEventRemovedArgs e)
@@ -87,6 +86,7 @@ public class CardStackView : MonoBehaviour
         }
         else
         {
+            //firstCard.ShowCard(true);
             card.ShowCard(showFace);
         }
 

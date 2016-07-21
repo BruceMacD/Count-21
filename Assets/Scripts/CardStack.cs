@@ -90,11 +90,11 @@ public class CardStack : MonoBehaviour
 
             total += cardVal;
         }
-        //TO DO: 10 + A + A = 22, should be 12
+
         for (int i = 0; i < aces; i++)
         {
             //check for bust with ace
-            if (total + 11 <= 21)
+            if (total + 11 <= 21 && aces == 1)
             {
                 total += 11;
             }
