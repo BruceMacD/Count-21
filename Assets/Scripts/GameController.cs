@@ -14,6 +14,9 @@ public class GameController : MonoBehaviour
     public Button hitButton;
     public Button stickButton;
 
+    public int bank;
+    public int bet;
+
     #region Controls
 
     public void Hit()
@@ -21,22 +24,13 @@ public class GameController : MonoBehaviour
         player.Push(deck.Pop());
         if (player.HandValue() > 21)
         {
-            //TO DO: Player is bust
-            hitButton.interactable = false;
-            stickButton.interactable = false;
+            //Player is bust
+            StartCoroutine(DealerHit());
         }
     }
 
     public void Stick()
     {
-        hitButton.interactable = false;
-        stickButton.interactable = false;
-
-        //flip dealer card by hiding cardBack
-        Vector3 localScale = transform.localScale;
-        localScale.x = 0; //hide card
-        cardBack.transform.localScale = localScale;
-
         StartCoroutine(DealerHit());
     }
 
@@ -49,6 +43,8 @@ public class GameController : MonoBehaviour
 
     void StartGame()
     {
+        //TO DO: show card back
+
         for (int i = 0; i < 2; i++)
         {
             player.Push(deck.Pop());
@@ -58,13 +54,51 @@ public class GameController : MonoBehaviour
 
     IEnumerator DealerHit()
     {
-        
-        while (dealer.HandValue() < 17 || (dealer.HandValue() < player.HandValue()))
+        hitButton.interactable = false;
+        stickButton.interactable = false;
+        //flip dealer card by hiding cardBack
+        Vector3 localScale = transform.localScale;
+        localScale.x = 0; //hide card
+        cardBack.transform.localScale = localScale;
+
+        if (player.HandValue() <= 21)
         {
-            //dealer.FlipFirstCard();
-            dealer.Push(deck.Pop());
-            yield return new WaitForSeconds(1f);
+            while (dealer.HandValue() < player.HandValue())
+            {
+                yield return new WaitForSeconds(1f);
+                dealer.Push(deck.Pop());
+            }
         }
+
+        CheckWinner();
+    }
+
+    public void CheckWinner()
+    {
+        if (player.HandValue() > dealer.HandValue() && player.HandValue() <= 21)
+        {
+            Debug.Log("Player wins");
+            //TO DO: Add to bank based on bet
+        }
+        else
+        {
+            //dealer wins
+            Debug.Log("Dealer wins");
+            //Remove bet from play/bank
+        }
+        ResetGame();
+    }
+
+    public void ResetGame()
+    {
+        player.GetComponent<CardStackView>().Clear();
+        dealer.GetComponent<CardStackView>().Clear();
+        dealer.Reset();
+
+        hitButton.interactable = true;
+        stickButton.interactable = true;
+
+        StartGame();
     }
     
 }

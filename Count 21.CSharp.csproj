@@ -75,7 +75,7 @@
     <Compile Include="Assets\Scripts\RemoveEventDelegate.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Buttons\ColorfulButtons\Credits.txt" />
+    <None Include="Assets\Prefabs\Buttons\ColorfulButtons\Credits.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

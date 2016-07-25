@@ -42,11 +42,18 @@ public class CardStackView : MonoBehaviour
 
     void Update()
     {
-        if (lastCount != deck.CardCount)
+        ShowCards();
+    }
+
+    public void Clear()
+    {
+        deck.Reset();
+
+        foreach(GameObject view in fetchedCards.Values)
         {
-            lastCount = deck.CardCount;
-            ShowCards();
+            Destroy(view.gameObject);
         }
+        fetchedCards.Clear();
     }
 
     void ShowCards()
