@@ -4,8 +4,6 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-    int dealerFirstCard = -1;
-
     public CardStack player;
     public CardStack deck;
     public CardStack dealer;
@@ -14,7 +12,8 @@ public class GameController : MonoBehaviour
     public Button hitButton;
     public Button stickButton;
 
-    public int bank;
+    //start the player with $100
+    public int bank = 100;
     public int bet;
 
     #region Controls
@@ -43,7 +42,7 @@ public class GameController : MonoBehaviour
 
     void StartGame()
     {
-        //TO DO: show card back
+        cardBack.SetActive(true);
 
         for (int i = 0; i < 2; i++)
         {
@@ -56,10 +55,7 @@ public class GameController : MonoBehaviour
     {
         hitButton.interactable = false;
         stickButton.interactable = false;
-        //flip dealer card by hiding cardBack
-        Vector3 localScale = transform.localScale;
-        localScale.x = 0; //hide card
-        cardBack.transform.localScale = localScale;
+        cardBack.SetActive(false);
 
         if (player.HandValue() <= 21 && player.HandValue() > dealer.HandValue())
         {
