@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using UnityEngine.UI;
 
@@ -13,8 +14,9 @@ public class GameController : MonoBehaviour
     public Button stickButton;
 
     //start the player with $100
-    public int bank = 100;
+    public int bank;
     public int bet;
+    public Text bankText;
 
     #region Controls
 
@@ -42,6 +44,8 @@ public class GameController : MonoBehaviour
 
     void StartGame()
     {
+        //TO DO: deal with large numbers
+        bankText.text = bank.ToString();
         cardBack.SetActive(true);
 
         for (int i = 0; i < 2; i++)
