@@ -20,6 +20,14 @@ public class GameController : MonoBehaviour
 
     #region Controls
 
+    void Update()
+    {
+        if (Input.touchCount > 0)
+        {
+            Debug.Log("touch");
+        }
+    }
+
     public void Hit()
     {
         player.Push(deck.Pop());
