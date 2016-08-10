@@ -10,8 +10,13 @@ public class GameController : MonoBehaviour
     public CardStack dealer;
     public GameObject cardBack;
 
+    //controls
     public Button hitButton;
     public Button stickButton;
+    //touch controls
+    float touchDuration;
+    Touch touch;
+    bool touchEnabled = true;
 
     //start the player with $100
     public int bank;
@@ -22,24 +27,55 @@ public class GameController : MonoBehaviour
 
     void Update()
     {
-        if (Input.touchCount > 0)
+        //detect double tap or hold
+        if(Input.touchCount > 0 && touchEnabled)
         {
-            Debug.Log("touch");
+            touchDuration += Time.deltaTime;
+            touch = Input.GetTouch(0);
+ 
+            //double tap
+            if(touch.phase == TouchPhase.Ended && touchDuration < 0.2f)
+            {
+                //not tap and hold, check hit
+                StartCoroutine("CheckDoubleTap");
+            }
+            //press and hold
+            else if (touch.phase == TouchPhase.Moved && touchDuration > 0.4f)
+            {
+                //player sticks
+                Stick();
+            }
+        }
+        else
+        {
+            touchDuration = 0.0f;
+        }
+    }
+ 
+    IEnumerator CheckDoubleTap(){
+        yield return new WaitForSeconds(0.3f);
+        if(touch.tapCount == 2){
+            //tapped twice, stop checking now
+            StopCoroutine("CheckDoubleTap");
+            Hit();
         }
     }
 
     public void Hit()
     {
         player.Push(deck.Pop());
-        if (player.HandValue() > 21)
+        if (player.HandValue() >= 21)
         {
-            //Player is bust
+            touchEnabled = false;
+            //Player is bust or at 21
             StartCoroutine(DealerHit());
         }
     }
 
     public void Stick()
     {
+        //stop checking touch
+        touchEnabled = false;
         StartCoroutine(DealerHit());
     }
 
@@ -47,9 +83,6 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-        //lock the orientation
-        Screen.orientation = ScreenOrientation.Portrait;
-
         StartGame();
     }
 
@@ -109,6 +142,8 @@ public class GameController : MonoBehaviour
 
         hitButton.interactable = true;
         stickButton.interactable = true;
+
+        touchEnabled = true;
 
         StartGame();
     }
