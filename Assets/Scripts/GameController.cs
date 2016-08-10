@@ -47,6 +47,9 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
+        //lock the orientation
+        Screen.orientation = ScreenOrientation.Portrait;
+
         StartGame();
     }
 
