@@ -3,6 +3,7 @@ using System.Collections;
 
 public class CardFlip : MonoBehaviour
 {
+    //not implemented
     //card flipping animation script
     float defaultCardScale;
     SpriteRenderer cardRender; //reference to attatched card sprite render

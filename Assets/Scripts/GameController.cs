@@ -18,10 +18,13 @@ public class GameController : MonoBehaviour
     Touch touch;
     bool touchEnabled = true;
 
-    //start the player with $100
-    public int bank;
-    public int bet;
-    public Text bankText;
+    //betting
+    public Bank gameBank;
+    //betting UI
+    public Button confirm;
+    public Button betFive;
+    public Button betTen;
+    public Button betTwenty;
 
     #region Controls
 
@@ -88,8 +91,7 @@ public class GameController : MonoBehaviour
 
     void StartGame()
     {
-        //TO DO: deal with large numbers
-        bankText.text = bank.ToString();
+        //cover the dealers first card
         cardBack.SetActive(true);
 
         for (int i = 0; i < 2; i++)
@@ -97,6 +99,8 @@ public class GameController : MonoBehaviour
             player.Push(deck.Pop());
             dealer.Push(deck.Pop());
         }
+        
+        confirm.GetComponent<Animation>().Play();
     }
 
     IEnumerator DealerHit()
