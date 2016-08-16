@@ -26,6 +26,14 @@ public class GameController : MonoBehaviour
     public Button betTen;
     public Button betTwenty;
 
+    //keep current hi/lo count
+    int count = 0;
+
+    //button text
+    public GUIText betText;
+    public GUIText countText;
+    public GUIText bankText;
+
     #region Controls
 
     void Update()
