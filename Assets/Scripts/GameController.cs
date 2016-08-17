@@ -78,8 +78,7 @@ public class GameController : MonoBehaviour
     public void Hit()
     {
         player.Push(deck.Pop());
-        CountCalc(player.HandValue() - prevPlayerHandVal);
-        prevPlayerHandVal = player.HandValue();
+        AddPlayerCount();
 
         if (player.HandValue() >= 21)
         {
@@ -124,17 +123,27 @@ public class GameController : MonoBehaviour
             else
             {
                 dealer.Push(deck.Pop());
-                CountCalc(dealer.HandValue() - prevDealerHandVal);
-                prevDealerHandVal = dealer.HandValue();
+                AddDealerCount();
             }
 
             player.Push(deck.Pop());
-            CountCalc(player.HandValue() - prevPlayerHandVal);
-            prevPlayerHandVal = player.HandValue();
+            AddPlayerCount();
         }
 
         //TODO: move this, also verify
         //confirm.GetComponent<Animation>().Play();
+    }
+
+    void AddDealerCount()
+    {
+        CountCalc(dealer.HandValue() - prevDealerHandVal);
+        prevDealerHandVal = dealer.HandValue();
+    }
+
+    void AddPlayerCount()
+    {
+        CountCalc(player.HandValue() - prevPlayerHandVal);
+        prevPlayerHandVal = player.HandValue();
     }
 
     void CountCalc(int cardVal)
@@ -164,6 +173,7 @@ public class GameController : MonoBehaviour
         hitButton.interactable = false;
         stickButton.interactable = false;
         cardBack.SetActive(false);
+        //add hidden dealer card to the count
         CountCalc(hiddenVal);
 
         if (player.HandValue() <= 21 && player.HandValue() > dealer.HandValue())
@@ -172,8 +182,7 @@ public class GameController : MonoBehaviour
             {
                 yield return new WaitForSeconds(1f);
                 dealer.Push(deck.Pop());
-                CountCalc(dealer.HandValue() - prevDealerHandVal);
-                prevDealerHandVal = dealer.HandValue();
+                AddDealerCount();
             }
         }
         //let the player see the results
