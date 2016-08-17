@@ -30,6 +30,7 @@ public class GameController : MonoBehaviour
     int count = 0;
     int prevPlayerHandVal;
     int prevDealerHandVal;
+    int hiddenVal;
 
     //button text
     public Text betText;
@@ -77,6 +78,9 @@ public class GameController : MonoBehaviour
     public void Hit()
     {
         player.Push(deck.Pop());
+        CountCalc(player.HandValue() - prevPlayerHandVal);
+        prevPlayerHandVal = player.HandValue();
+
         if (player.HandValue() >= 21)
         {
             touchEnabled = false;
@@ -114,6 +118,8 @@ public class GameController : MonoBehaviour
             if (i == 0)
             {
                 dealer.Push(deck.Pop());
+                hiddenVal = dealer.HandValue();
+                prevDealerHandVal = dealer.HandValue();
             }
             else
             {
@@ -158,6 +164,7 @@ public class GameController : MonoBehaviour
         hitButton.interactable = false;
         stickButton.interactable = false;
         cardBack.SetActive(false);
+        CountCalc(hiddenVal);
 
         if (player.HandValue() <= 21 && player.HandValue() > dealer.HandValue())
         {
@@ -165,6 +172,8 @@ public class GameController : MonoBehaviour
             {
                 yield return new WaitForSeconds(1f);
                 dealer.Push(deck.Pop());
+                CountCalc(dealer.HandValue() - prevDealerHandVal);
+                prevDealerHandVal = dealer.HandValue();
             }
         }
         //let the player see the results
