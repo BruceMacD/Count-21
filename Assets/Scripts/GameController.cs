@@ -28,11 +28,13 @@ public class GameController : MonoBehaviour
 
     //keep current hi/lo count
     int count = 0;
+    int prevPlayerHandVal;
+    int prevDealerHandVal;
 
     //button text
-    public GUIText betText;
-    public GUIText countText;
-    public GUIText bankText;
+    public Text betText;
+    public Text countText;
+    public Text bankText;
 
     #region Controls
 
@@ -102,13 +104,53 @@ public class GameController : MonoBehaviour
         //cover the dealers first card
         cardBack.SetActive(true);
 
+        //reset hand value for count
+        prevPlayerHandVal = 0;
+        prevDealerHandVal = 0;
+
         for (int i = 0; i < 2; i++)
         {
+            //don't count the unseen dealer's card
+            if (i == 0)
+            {
+                dealer.Push(deck.Pop());
+            }
+            else
+            {
+                dealer.Push(deck.Pop());
+                CountCalc(dealer.HandValue() - prevDealerHandVal);
+                prevDealerHandVal = dealer.HandValue();
+            }
+
             player.Push(deck.Pop());
-            dealer.Push(deck.Pop());
+            CountCalc(player.HandValue() - prevPlayerHandVal);
+            prevPlayerHandVal = player.HandValue();
         }
-        
-        confirm.GetComponent<Animation>().Play();
+
+        //TODO: move this, also verify
+        //confirm.GetComponent<Animation>().Play();
+    }
+
+    void CountCalc(int cardVal)
+    {
+        //2, 3, 4, 5, 6, 7 = +1
+        //8, 9 = 0
+        //10, J, Q, K, A = -1
+        if (cardVal == 1 || cardVal > 9)
+        {
+            count--;
+        }
+        else if (7 < cardVal && cardVal < 10)
+        {
+            //add nothing
+            return;
+        }
+        else
+        {
+            count++;
+        }
+
+        countText.text = count.ToString();
     }
 
     IEnumerator DealerHit()
