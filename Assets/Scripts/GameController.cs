@@ -9,22 +9,11 @@ public class GameController : MonoBehaviour
     public CardStack deck;
     public CardStack dealer;
     public GameObject cardBack;
-
-    //controls
-    public Button hitButton;
-    public Button stickButton;
+    
     //touch controls
     float touchDuration;
     Touch touch;
     bool touchEnabled = true;
-
-    //betting
-    public Bank gameBank;
-    //betting UI
-    public Button confirm;
-    public Button betFive;
-    public Button betTen;
-    public Button betTwenty;
 
     //keep current hi/lo count
     int count = 0;
@@ -36,6 +25,10 @@ public class GameController : MonoBehaviour
     public Text betText;
     public Text countText;
     public Text bankText;
+
+    //bank and betting
+    double bank = 100;
+    double bet = 0;
 
     #region Controls
 
@@ -99,10 +92,41 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-        StartGame();
+        //TODO: show bet UI
+        //PlaceBet();
     }
 
-    void StartGame()
+    public void PlaceBetFive()
+    {
+        if (bank >= 5)
+        {
+            bet += 5;
+            bank -= 5;
+            SetBalance();
+        }
+    }
+
+    public void PlaceBetTen()
+    {
+        if (bank >= 10)
+        {
+            bet += 10;
+            bank -= 10;
+            SetBalance();
+        }
+    }
+
+    public void PlaceBetTwenty()
+    {
+        if (bank >= 20)
+        {
+            bet += 20;
+            bank -= 20;
+            SetBalance();
+        }
+    }
+
+    public void StartGame()
     {
         //cover the dealers first card
         cardBack.SetActive(true);
@@ -170,8 +194,6 @@ public class GameController : MonoBehaviour
 
     IEnumerator DealerHit()
     {
-        hitButton.interactable = false;
-        stickButton.interactable = false;
         cardBack.SetActive(false);
         //add hidden dealer card to the count
         CountCalc(hiddenVal);
@@ -190,34 +212,47 @@ public class GameController : MonoBehaviour
         CheckWinner();
     }
 
-    public void CheckWinner()
+    void CheckWinner()
     {
         if ((player.HandValue() > dealer.HandValue() && (player.HandValue() <= 21)) || dealer.HandValue() > 21)
         {
             Debug.Log("Player wins: player = " + player.HandValue() + " dealer: " + dealer.HandValue());
-            //TO DO: Add to bank based on bet
+            //casino pays 3:2
+            double ret = bet * .5;
+            bank = bank + bet + ret;
+            bet = 0;
         }
         else
         {
             //dealer wins
             Debug.Log("Dealer wins: player = " + player.HandValue() + " dealer: " + dealer.HandValue());
-            //Remove bet from play/bank
+            bet = 0;
         }
         ResetGame();
     }
 
     public void ResetGame()
     {
+        //check if player is out of money
+        if (bank < 5)
+        {
+            //TODO: end game
+        }
+
         player.GetComponent<CardStackView>().Clear();
         dealer.GetComponent<CardStackView>().Clear();
         dealer.Reset();
 
-        hitButton.interactable = true;
-        stickButton.interactable = true;
-
         touchEnabled = true;
 
-        StartGame();
+        SetBalance();
+
+        //TODO: show the betting UI
     }
     
+    void SetBalance()
+    {
+        bankText.text = bank.ToString();
+        betText.text = bet.ToString();
+    }
 }

@@ -8,7 +8,6 @@ public class CardStackView : MonoBehaviour
 {
     CardStack deck;
     Dictionary<int, GameObject> fetchedCards;
-    int lastCount;
 
     public Vector3 start;
     public GameObject cardPrefab;
