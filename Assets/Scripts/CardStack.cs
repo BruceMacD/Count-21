@@ -53,6 +53,14 @@ public class CardStack : MonoBehaviour
             CardRemoved(this, new CardEventRemovedArgs(ret));
         }
 
+        //check if deck is empty
+        if (!HasCards)
+        {
+            //refill the deck
+            cards.Clear();
+            MakeDeck();
+        }
+
         return ret;
     }
 

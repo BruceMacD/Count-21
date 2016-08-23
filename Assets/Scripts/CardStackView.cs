@@ -25,7 +25,6 @@ public class CardStackView : MonoBehaviour
         fetchedCards = new Dictionary<int, GameObject>();
         deck = GetComponent<CardStack>();
         ShowCards();
-        lastCount = deck.CardCount;
 
         deck.CardRemoved += Deck_CardRemoved;
     }
@@ -110,6 +109,5 @@ public class CardStackView : MonoBehaviour
 
         fetchedCards.Add(cardIndex, cardCopy);
 
-        Debug.Log("Hand value = " + deck.HandValue());
     }
 }
