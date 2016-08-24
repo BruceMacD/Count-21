@@ -21,14 +21,10 @@ public class GameController : MonoBehaviour
     int prevDealerHandVal;
     int hiddenVal;
 
-    //button text
-    public Text betText;
+    //UI text
     public Text countText;
-    public Text bankText;
 
-    //bank and betting
-    double bank = 100;
-    double bet = 0;
+    public Bank bank;
 
     #region Controls
 
@@ -93,37 +89,6 @@ public class GameController : MonoBehaviour
     void Start()
     {
         //TODO: show bet UI
-        //PlaceBet();
-    }
-
-    public void PlaceBetFive()
-    {
-        if (bank >= 5)
-        {
-            bet += 5;
-            bank -= 5;
-            SetBalance();
-        }
-    }
-
-    public void PlaceBetTen()
-    {
-        if (bank >= 10)
-        {
-            bet += 10;
-            bank -= 10;
-            SetBalance();
-        }
-    }
-
-    public void PlaceBetTwenty()
-    {
-        if (bank >= 20)
-        {
-            bet += 20;
-            bank -= 20;
-            SetBalance();
-        }
     }
 
     public void StartGame()
@@ -217,16 +182,13 @@ public class GameController : MonoBehaviour
         if ((player.HandValue() > dealer.HandValue() && (player.HandValue() <= 21)) || dealer.HandValue() > 21)
         {
             Debug.Log("Player wins: player = " + player.HandValue() + " dealer: " + dealer.HandValue());
-            //casino pays 3:2
-            double ret = bet * .5;
-            bank = bank + bet + ret;
-            bet = 0;
+            bank.PayOut(true);
         }
         else
         {
             //dealer wins
             Debug.Log("Dealer wins: player = " + player.HandValue() + " dealer: " + dealer.HandValue());
-            bet = 0;
+            bank.PayOut(false);
         }
         ResetGame();
     }
@@ -234,9 +196,10 @@ public class GameController : MonoBehaviour
     public void ResetGame()
     {
         //check if player is out of money
-        if (bank < 5)
+        if (bank.Empty())
         {
             //TODO: end game
+
         }
 
         player.GetComponent<CardStackView>().Clear();
@@ -245,14 +208,8 @@ public class GameController : MonoBehaviour
 
         touchEnabled = true;
 
-        SetBalance();
+        bank.SetBalance();
 
         //TODO: show the betting UI
-    }
-    
-    void SetBalance()
-    {
-        bankText.text = bank.ToString();
-        betText.text = bet.ToString();
     }
 }
