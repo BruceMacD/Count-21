@@ -8,8 +8,8 @@ using UnityEngine;
 public class Bank : MonoBehaviour
 {
     //start the player with $100
-    double balance = 100;
-    double bet = 0;
+    decimal balance = 100.00m;
+    decimal bet = 0;
 
     //UI text
     public Text betText;
@@ -30,7 +30,7 @@ public class Bank : MonoBehaviour
         if (winner)
         {
             //casino pays 3:2
-            double ret = bet * .5;
+            decimal ret = bet * .5m;
             balance = balance + bet + ret;
         }
 
@@ -40,8 +40,11 @@ public class Bank : MonoBehaviour
 
     public void SetBalance()
     {
-        bankText.text = balance.ToString();
-        betText.text = bet.ToString();
+        decimal balanceDisplay = Convert.ToDecimal(string.Format("{0:F2}", balance));
+        bankText.text = balanceDisplay.ToString();
+
+        decimal betDisplay = Convert.ToDecimal(string.Format("{0:F2}", bet));
+        betText.text = betDisplay.ToString();
     }
 
     public bool Empty()
