@@ -25,6 +25,14 @@ public class Bank : MonoBehaviour
         }
     }
 
+    public void Undo()
+    {
+        balance += bet;
+        bet = 0;
+
+        SetBalance();
+    }
+
     public void PayOut(bool winner)
     {
         if (winner)

@@ -13,7 +13,7 @@ public class GameController : MonoBehaviour
     //touch controls
     float touchDuration;
     Touch touch;
-    bool touchEnabled = true;
+    bool touchEnabled = false;
 
     //keep current hi/lo count
     int count = 0;
@@ -89,6 +89,8 @@ public class GameController : MonoBehaviour
     void Start()
     {
         //TODO: show bet UI
+        //prevent user from getting cards before betting
+        touchEnabled = false;
     }
 
     public void StartGame()
@@ -119,6 +121,7 @@ public class GameController : MonoBehaviour
             AddPlayerCount();
         }
 
+        touchEnabled = true;
         //TODO: move this, also verify
         //confirm.GetComponent<Animation>().Play();
     }
@@ -205,8 +208,6 @@ public class GameController : MonoBehaviour
         player.GetComponent<CardStackView>().Clear();
         dealer.GetComponent<CardStackView>().Clear();
         dealer.Reset();
-
-        touchEnabled = true;
 
         bank.SetBalance();
 
