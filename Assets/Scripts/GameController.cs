@@ -23,6 +23,7 @@ public class GameController : MonoBehaviour
 
     //UI text
     public Text countText;
+    public Text winLoseText;
 
     public Bank bank;
 
@@ -40,7 +41,7 @@ public class GameController : MonoBehaviour
             if(touch.phase == TouchPhase.Ended && touchDuration < 0.2f)
             {
                 //not tap and hold, check hit
-                StartCoroutine("CheckDoubleTap");
+                StartCoroutine(CheckDoubleTap());
             }
             //press and hold
             else if (touch.phase == TouchPhase.Moved && touchDuration > 0.4f)
@@ -59,7 +60,7 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         if(touch.tapCount == 2){
             //tapped twice, stop checking now
-            StopCoroutine("CheckDoubleTap");
+            StopCoroutine(CheckDoubleTap());
             Hit();
         }
     }
@@ -91,37 +92,44 @@ public class GameController : MonoBehaviour
         //TODO: show bet UI
         //prevent user from getting cards before betting
         touchEnabled = false;
+        cardBack.SetActive(false);
+        winLoseText.text = " ";
     }
 
     public void StartGame()
     {
-        //cover the dealers first card
-        cardBack.SetActive(true);
-
-        //reset hand value for count
-        prevPlayerHandVal = 0;
-        prevDealerHandVal = 0;
-
-        for (int i = 0; i < 2; i++)
+        //only allow play if a bet is active 
+        if (bank.GetBet() > 0.00m)
         {
-            //don't count the unseen dealer's card
-            if (i == 0)
+            //cover the dealers first card
+            cardBack.SetActive(true);
+
+            //reset hand value for count
+            prevPlayerHandVal = 0;
+            prevDealerHandVal = 0;
+
+            for (int i = 0; i < 2; i++)
             {
-                dealer.Push(deck.Pop());
-                hiddenVal = dealer.HandValue();
-                prevDealerHandVal = dealer.HandValue();
-            }
-            else
-            {
-                dealer.Push(deck.Pop());
-                AddDealerCount();
+                //don't count the unseen dealer's card
+                if (i == 0)
+                {
+                    dealer.Push(deck.Pop());
+                    hiddenVal = dealer.HandValue();
+                    prevDealerHandVal = dealer.HandValue();
+                }
+                else
+                {
+                    dealer.Push(deck.Pop());
+                    AddDealerCount();
+                }
+
+                player.Push(deck.Pop());
+                AddPlayerCount();
             }
 
-            player.Push(deck.Pop());
-            AddPlayerCount();
+            touchEnabled = true;
         }
 
-        touchEnabled = true;
         //TODO: move this, also verify
         //confirm.GetComponent<Animation>().Play();
     }
@@ -175,8 +183,6 @@ public class GameController : MonoBehaviour
                 AddDealerCount();
             }
         }
-        //let the player see the results
-        yield return new WaitForSeconds(3f);
         CheckWinner();
     }
 
@@ -184,20 +190,30 @@ public class GameController : MonoBehaviour
     {
         if ((player.HandValue() > dealer.HandValue() && (player.HandValue() <= 21)) || dealer.HandValue() > 21)
         {
-            Debug.Log("Player wins: player = " + player.HandValue() + " dealer: " + dealer.HandValue());
+            Debug.Log("Player wins: player = " + player.HandValue() + " dealer = " + dealer.HandValue());
+
             bank.PayOut(true);
+            winLoseText.text = "WIN";
         }
         else
         {
             //dealer wins
-            Debug.Log("Dealer wins: player = " + player.HandValue() + " dealer: " + dealer.HandValue());
+            Debug.Log("Dealer wins: player = " + player.HandValue() + " dealer = " + dealer.HandValue());
+
             bank.PayOut(false);
+            winLoseText.text = "LOSE";
         }
-        ResetGame();
+
+        StartCoroutine(ResetGame());
     }
 
-    public void ResetGame()
+    IEnumerator ResetGame()
     {
+        //let the player see the results
+        yield return new WaitForSeconds(2f);
+        winLoseText.text = "";
+        ResetGame();
+
         //check if player is out of money
         if (bank.Empty())
         {
@@ -210,7 +226,7 @@ public class GameController : MonoBehaviour
         dealer.Reset();
 
         bank.SetBalance();
-
+        
         //TODO: show the betting UI
     }
 }

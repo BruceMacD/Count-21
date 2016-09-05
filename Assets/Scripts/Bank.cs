@@ -55,6 +55,11 @@ public class Bank : MonoBehaviour
         betText.text = betDisplay.ToString();
     }
 
+    public decimal GetBet()
+    {
+        return bet;
+    }
+
     public bool Empty()
     {
         if (balance < 5)
