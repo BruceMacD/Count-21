@@ -41,7 +41,7 @@ public class GameController : MonoBehaviour
             if(touch.phase == TouchPhase.Ended && touchDuration < 0.2f)
             {
                 //not tap and hold, check hit
-                StartCoroutine(CheckDoubleTap());
+                StartCoroutine("CheckDoubleTap");
             }
             //press and hold
             else if (touch.phase == TouchPhase.Moved && touchDuration > 0.4f)
@@ -60,7 +60,7 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         if(touch.tapCount == 2){
             //tapped twice, stop checking now
-            StopCoroutine(CheckDoubleTap());
+            StopCoroutine("CheckDoubleTap");
             Hit();
         }
     }
