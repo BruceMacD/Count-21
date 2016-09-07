@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -24,6 +25,8 @@ public class GameController : MonoBehaviour
     //UI text
     public Text countText;
     public Text winLoseText;
+    public Text quitText;
+    bool quitGame = false;
 
     public Bank bank;
 
@@ -32,7 +35,7 @@ public class GameController : MonoBehaviour
     void Update()
     {
         //detect double tap or hold
-        if(Input.touchCount > 0 && touchEnabled)
+        if (Input.touchCount > 0 && touchEnabled)
         {
             touchDuration += Time.deltaTime;
             touch = Input.GetTouch(0);
@@ -228,5 +231,30 @@ public class GameController : MonoBehaviour
         bank.SetBalance();
         
         //TODO: show the betting UI
+    }
+
+    public void QuitMenu()
+    {
+        if (!quitGame)
+        {
+            quitText.text = "touch again to quit";
+            quitGame = true;
+            StartCoroutine(TouchToQuit());
+        }
+        else
+        {
+            //double tap
+            SceneManager.LoadScene("MainMenu");
+        }
+    }
+
+    IEnumerator TouchToQuit()
+    {
+        //let the player see the results
+        yield return new WaitForSeconds(2f);
+
+        //disable quit
+        quitText.text = "";
+        quitGame = false;
     }
 }
