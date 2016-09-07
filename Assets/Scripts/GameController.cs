@@ -26,6 +26,7 @@ public class GameController : MonoBehaviour
     public Text countText;
     public Text winLoseText;
     public Text quitText;
+    public Text informationText;
     bool quitGame = false;
 
     public Bank bank;
@@ -104,6 +105,9 @@ public class GameController : MonoBehaviour
         //only allow play if a bet is active 
         if (bank.GetBet() > 0.00m)
         {
+            //clear information UI
+            informationText.text = "";
+
             //cover the dealers first card
             cardBack.SetActive(true);
 
