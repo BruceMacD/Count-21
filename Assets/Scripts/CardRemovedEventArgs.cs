@@ -9,6 +9,7 @@ public class CardEventRemovedArgs : EventArgs
 
     public CardEventRemovedArgs(int cardIndex)
     {
+        //track the index of card removed pass value
         CardIndex = cardIndex;
     }
 }

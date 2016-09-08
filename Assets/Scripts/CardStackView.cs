@@ -9,6 +9,7 @@ public class CardStackView : MonoBehaviour
     CardStack deck;
     Dictionary<int, GameObject> fetchedCards;
 
+    //start is offset of cards when placed
     public Vector3 start;
     public GameObject cardPrefab;
     public GameObject canvas;
@@ -51,6 +52,7 @@ public class CardStackView : MonoBehaviour
         {
             Destroy(view.gameObject);
         }
+
         fetchedCards.Clear();
     }
 
@@ -63,8 +65,8 @@ public class CardStackView : MonoBehaviour
             float offset = cardOffset * cardCount;
             
             //offset for viewing purposes
-            Vector3 temp = start + new Vector3(offset, 0f);
-            AddCard(temp, i, cardCount);
+            Vector3 pos = start + new Vector3(offset, 0f);
+            AddCard(pos, i, cardCount);
 
             cardCount++;
         }
@@ -91,7 +93,6 @@ public class CardStackView : MonoBehaviour
         }
         else
         {
-            //firstCard.ShowCard(true);
             card.ShowCard(showFace);
         }
 

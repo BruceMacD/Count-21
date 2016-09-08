@@ -15,6 +15,7 @@ public class AboutController : MonoBehaviour
 
     public void ClosePanel()
     {
+        //hide any open panel
         controlsPanel.SetActive(false);
         countingPanel.SetActive(false);
         creditsPanel.SetActive(false);

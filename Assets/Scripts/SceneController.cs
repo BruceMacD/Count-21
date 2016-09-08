@@ -2,6 +2,8 @@
 using UnityEngine.SceneManagement;
 using System.Collections;
 
+//logic for changing scences on button press
+
 public class SceneController : MonoBehaviour
 {
     public AudioSource click;
@@ -16,6 +18,4 @@ public class SceneController : MonoBehaviour
     {
         click.Play();
     }
-
-
 }

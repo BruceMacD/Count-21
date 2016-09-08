@@ -23,6 +23,7 @@ public class Bank : MonoBehaviour
     {
         betSound.Play();
 
+        //check valid bet
         if (balance >= chip)
         {
             bet += chip;
@@ -33,6 +34,7 @@ public class Bank : MonoBehaviour
 
     public void Undo()
     {
+        //return current bet to player bank balance
         balance += bet;
         bet = 0;
 
