@@ -29,6 +29,13 @@ public class GameController : MonoBehaviour
     public Text informationText;
     bool quitGame = false;
 
+    //UI buttons
+    public GameObject confirmButton;
+    public GameObject undoButton;
+    public GameObject betFiveButton;
+    public GameObject betTenButton;
+    public GameObject betTwentyButton;
+
     public Bank bank;
 
     #region Controls
@@ -134,11 +141,15 @@ public class GameController : MonoBehaviour
                 AddPlayerCount();
             }
 
+            //hide the betting UI
+            confirmButton.SetActive(false);
+            undoButton.SetActive(false);
+            betFiveButton.SetActive(false);
+            betTenButton.SetActive(false);
+            betTwentyButton.SetActive(false);
+
             touchEnabled = true;
         }
-
-        //TODO: move this, also verify
-        //confirm.GetComponent<Animation>().Play();
     }
 
     void AddDealerCount()
@@ -233,8 +244,15 @@ public class GameController : MonoBehaviour
         dealer.Reset();
 
         bank.SetBalance();
-        
-        //TODO: show the betting UI
+
+        //show the betting UI
+        confirmButton.SetActive(true);
+        undoButton.SetActive(true);
+        betFiveButton.SetActive(true);
+        betTenButton.SetActive(true);
+        betTwentyButton.SetActive(true);
+
+        touchEnabled = false;
     }
 
     public void QuitMenu()
