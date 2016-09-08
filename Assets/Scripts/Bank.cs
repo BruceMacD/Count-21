@@ -15,8 +15,14 @@ public class Bank : MonoBehaviour
     public Text betText;
     public Text bankText;
 
+    //game sounds
+    public AudioSource betSound;
+    public AudioSource bankSound;
+
     public void PlaceBet(int chip)
     {
+        betSound.Play();
+
         if (balance >= chip)
         {
             bet += chip;
@@ -35,6 +41,8 @@ public class Bank : MonoBehaviour
 
     public void PayOut(bool winner)
     {
+        bankSound.Play();
+
         if (winner)
         {
             //casino pays 3:2

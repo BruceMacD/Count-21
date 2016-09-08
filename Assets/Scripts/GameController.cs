@@ -230,29 +230,36 @@ public class GameController : MonoBehaviour
         //let the player see the results
         yield return new WaitForSeconds(2f);
         winLoseText.text = "";
-        ResetGame();
 
+        touchEnabled = false;
         //check if player is out of money
         if (bank.Empty())
         {
-            //TODO: end game
-
+            StartCoroutine(GameOver());
         }
+        else
+        {
+            player.GetComponent<CardStackView>().Clear();
+            dealer.GetComponent<CardStackView>().Clear();
+            dealer.Reset();
 
-        player.GetComponent<CardStackView>().Clear();
-        dealer.GetComponent<CardStackView>().Clear();
-        dealer.Reset();
+            bank.SetBalance();
 
-        bank.SetBalance();
+            //show the betting UI
+            confirmButton.SetActive(true);
+            undoButton.SetActive(true);
+            betFiveButton.SetActive(true);
+            betTenButton.SetActive(true);
+            betTwentyButton.SetActive(true);
+        }
+    }
 
-        //show the betting UI
-        confirmButton.SetActive(true);
-        undoButton.SetActive(true);
-        betFiveButton.SetActive(true);
-        betTenButton.SetActive(true);
-        betTwentyButton.SetActive(true);
+    IEnumerator GameOver()
+    {
+        winLoseText.text = "GAME OVER";
+        yield return new WaitForSeconds(2f);
 
-        touchEnabled = false;
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void QuitMenu()
